@@ -4,8 +4,8 @@ const cors = require("cors")
 app.use(express.json());
 
 const corsOption = {
-  origin : "*",
-  credentials : true
+  origin: "*",
+  credentials: true
 };
 
 app.use(cors(corsOption))
