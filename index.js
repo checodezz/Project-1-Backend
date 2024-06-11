@@ -14,11 +14,6 @@ const corsOption = {
 };
 
 app.use(cors(corsOption));
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5175");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 
 const { initializeDatabase } = require("./db/db.connect");
 const Product = require("./model/products.model");
@@ -72,7 +67,7 @@ app.get("/products", async (req, res) => {
   try {
     const products = await getAllProducts();
     if (products.length != 0) {
-      // console.log(products);n
+      // console.log(products);
       res.status(200).json({ message: "All Products:", products: products });
     } else {
       res.status(404).json({ message: "Product not found." });
