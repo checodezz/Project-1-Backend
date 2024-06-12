@@ -21,7 +21,6 @@ const Product = require("./model/products.model");
 // Initialize the database
 initializeDatabase();
 
-// Test route
 app.get("/", (req, res) => {
   res.send("Hello");
 });
@@ -77,7 +76,45 @@ app.get("/products", async (req, res) => {
   }
 });
 
+
+//get products by id route
+async function getProductById(productId) {
+  try {
+    const product = await Product.findById(productId);
+    return product;
+  } catch (error) {
+    throw error
+  }
+}
+
+app.get("/products/:productId", async (req, res) => {
+  try {
+    const product = await getProductById(req.params.productId);
+    if (product) {
+      res.json(product)
+    } else {
+      res.status(404).josn({ error: "Product not found." })
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(500).josn({ error: "Failed to fetch Products." })
+  }
+})
+
+
+//get products by category route
+
+/* async function productCategories() {
+  try {
+    const categories = await Product.find({})
+  } catch (error) {
+    throw error
+  }
+}
+ */
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running at PORT ${PORT}`);
 });
+
